@@ -23,7 +23,6 @@ Lê PDFs de currículos → Filtra por palavras-chave → Classifica candidatos 
 - [Instalação e uso](#-instalação-e-uso)
 - [Configuração](#-configuração)
 - [Estrutura do projeto](#-estrutura-do-projeto)
-- [Currículos de teste](#-currículos-de-teste)
 - [Tecnologias](#-tecnologias)
 - [Licença](#-licença)
 
@@ -107,8 +106,8 @@ pip install --upgrade pip
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/triagem-curriculos-botcity.git
-cd triagem-curriculos-botcity
+git clone https://github.com/luanmaquin2/projeto-rpa.git
+cd projeto-rpa
 ```
 
 ### 2. Instale as dependências
@@ -125,8 +124,6 @@ Coloque os arquivos `.pdf` dos candidatos na pasta `curriculos/`:
 mkdir curriculos
 cp /caminho/para/curriculos/*.pdf curriculos/
 ```
-
-> 💡 **Não tem PDFs para testar?** Veja a seção [Currículos de teste](#-currículos-de-teste).
 
 ### 4. Execute o robô
 
@@ -211,13 +208,10 @@ triagem-curriculos-botcity/
 ├── requirements.txt         # dependências Python
 ├── README.md                # este arquivo
 │
-├── curriculos/              # coloque os PDFs aqui (não versionado)
-│   └── .gitkeep
-│
 ├── triagem_saida/           # relatórios gerados (não versionado)
 │   └── .gitkeep
 │
-└── curriculos_teste/        # currículos fictícios para teste
+└── curriculos/        # currículos fictícios para teste
     ├── 01_ana_souza_senior.pdf
     ├── 02_marcos_lima_pleno.pdf
     ├── 03_juliana_ferreira_junior.pdf
@@ -226,24 +220,6 @@ triagem-curriculos-botcity/
 ```
 
 ---
-
-## 🧪 Currículos de teste
-
-O projeto inclui **5 currículos fictícios** prontos para testar, com perfis que cobrem todas as classificações:
-
-| # | Candidato | Perfil | Nota Esperada |
-|---|-----------|--------|:-------------:|
-| 1 | **Ana Souza** — Eng. Sênior | Python, AWS, ML, Docker, liderança | ~85 ✅ |
-| 2 | **Marcos Lima** — Analista Pleno | SQL, Power BI, Python, inglês avançado | ~65 🟡 |
-| 3 | **Juliana Ferreira** — Dev Júnior | React, JavaScript, Git, SQL básico | ~45 🟡 |
-| 4 | **Roberto Alves** — Trainee TI | Excel avançado, gestão de projetos | ~42 🟡 |
-| 5 | **Fernanda Campos** — Designer | Photoshop, Figma (sem TI) | ~20 ❌ |
-
-Para gerá-los automaticamente:
-
-```bash
-python gerar_curriculos_teste.py
-```
 
 ---
 
