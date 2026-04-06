@@ -3,6 +3,7 @@ venv/
 .env/
 .venv/
 env/
+botc/
 
 # Arquivos do Python
 __pycache__/
