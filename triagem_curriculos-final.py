@@ -19,6 +19,8 @@ from pathlib import Path
 import pdfplumber                      # extracao de texto dos PDFs
 from botcity.core import DesktopBot    # orquestracao / automacao desktop
 
+import time
+import pyautogui
 from dotenv import load_dotenv
 import os
 
@@ -35,11 +37,7 @@ PASTA_CURRICULOS = Path("curriculos")
 PASTA_SAIDA = Path("triagem_saida")
 
 # ── Configurações de E-mail ────────────────────────────────────
-# Defina as variáveis de ambiente para não expor credenciais:
-#   Windows : set EMAIL_REMETENTE=recrutamento@suaempresa.com
-#             set EMAIL_SENHA=sua_senha_de_app
-#   Linux   : export EMAIL_REMETENTE=recrutamento@suaempresa.com
-#             export EMAIL_SENHA=sua_senha_de_app
+
 EMAIL_REMETENTE = os.getenv("EMAIL_REMETENTE")
 EMAIL_SENHA     = os.getenv("EMAIL_SENHA")        # senha de app (Gmail) ou SMTP
 SMTP_HOST       = os.getenv("SMTP_HOST", "smtp.gmail.com")
@@ -388,6 +386,37 @@ def main():
     # ── Localiza todos os PDFs ─────────────────────────────────
     pdfs = sorted(PASTA_CURRICULOS.glob("*.pdf"))
 
+    import time
+
+    def visualizar_curriculo(bot: DesktopBot, caminho_pdf: Path):
+        """Abre o PDF, espera 5 segundos e fecha."""
+        try:
+            print(f"    👁️ Abrindo: {caminho_pdf.name}")
+
+            # Abre o PDF com o programa padrão
+            os.startfile(caminho_pdf)
+
+            # Espera o arquivo abrir
+            time.sleep(3)
+
+            pyautogui.click(500, 500)
+
+        # 👇 Scroll gradual (simula leitura)
+            for _ in range(5):
+                pyautogui.scroll(-300)  # negativo = desce
+                time.sleep(0.8)
+
+            # Fecha a janela ativa (PDF)
+            bot.type_keys(["alt", "f4"])
+
+            print(f"    ❌ Fechado: {caminho_pdf.name}")
+
+            # Pequena pausa para garantir estabilidade
+            time.sleep(1)
+
+        except Exception as e:
+            print(f"    ⚠️ Erro ao visualizar {caminho_pdf.name}: {e}")
+
     if not pdfs:
         print(f"[AVISO] Nenhum PDF encontrado em '{PASTA_CURRICULOS}/'.")
         print("        Coloque os curriculos em PDF nessa pasta e execute novamente.")
@@ -399,6 +428,9 @@ def main():
     print("-" * 75)
 
     for pdf in pdfs:
+         # 👇 NOVO PASSO: visualizar o currículo
+        visualizar_curriculo(bot, pdf)
+
         # 1. Extrai texto
         texto = extrair_texto_pdf(pdf)
 
